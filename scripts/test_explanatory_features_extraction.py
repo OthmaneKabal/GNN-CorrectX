@@ -40,12 +40,6 @@ def main() -> None:
         help="Comma-separated relation names to count for relational features.",
     )
     parser.add_argument(
-        "--path-cutoff",
-        type=int,
-        default=4,
-        help="Maximum number of edges for counting simple distance paths.",
-    )
-    parser.add_argument(
         "--plm",
         default="sentence-transformers/all-MiniLM-L6-v2",
         help="Model used by get_gdp to embed entities and predicates.",
@@ -62,7 +56,6 @@ def main() -> None:
         gs_path=args.gs_path,
         features=_parse_csv_list(args.features),
         relations_to_count=_parse_csv_list(args.relations),
-        path_cutoff=args.path_cutoff,
         plm=args.plm,
         output_path=args.output_path,
     )

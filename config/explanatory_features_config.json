@@ -2,7 +2,6 @@
   "defaults": {
     "features": ["structural", "relational", "distance", "semantic"],
     "plm": "sentence-transformers/all-MiniLM-L6-v2",
-    "path_cutoff": 5,
     "output_path": "outputs/explanatory_features"
   },
   "graphs": [

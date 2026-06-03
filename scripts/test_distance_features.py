@@ -27,12 +27,6 @@ def main() -> None:
         help="Path to the gold-standard Excel file.",
     )
     parser.add_argument(
-        "--path-cutoff",
-        type=int,
-        default=4,
-        help="Maximum number of edges for counting simple paths to the correct type.",
-    )
-    parser.add_argument(
         "--plm",
         default="sentence-transformers/all-MiniLM-L6-v2",
         help="Model used by get_gdp to embed entities and predicates.",
@@ -55,8 +49,6 @@ def main() -> None:
     print(f"Graph: {graph_path}")
     print(f"Gold standard: {gs_path}")
     print(f"Embedding model: {args.plm}")
-    print(f"Path cutoff: {args.path_cutoff}")
-
     gdp, data = get_gdp(
         str(graph_path),
         plm=args.plm,
@@ -67,7 +59,6 @@ def main() -> None:
         gdp,
         data,
         str(gs_path),
-        path_cutoff=args.path_cutoff,
     )
 
     print("\nExtracted distance features:")

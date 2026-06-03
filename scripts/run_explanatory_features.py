@@ -75,7 +75,6 @@ def run_graph(graph_config):
         gs_path=str(gs_path),
         features=graph_config["features"],
         relations_to_count=graph_config.get("relations_to_count", []),
-        path_cutoff=graph_config.get("path_cutoff", 4),
         plm=graph_config["plm"],
         output_path=str(output_path) if output_path is not None else None,
     )

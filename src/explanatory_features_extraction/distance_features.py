@@ -39,10 +39,11 @@ def _correct_type_distance_rank(undirected_graph, source, correct_type, candidat
     if source not in undirected_graph or correct_type not in undirected_graph:
         return -1
 
+    shortest_distances = nx.single_source_shortest_path_length(undirected_graph, source)
     distances = []
     for candidate_type in candidate_types:
-        distance = _shortest_path_length(undirected_graph, source, candidate_type)
-        if distance != -1:
+        distance = shortest_distances.get(candidate_type)
+        if distance is not None:
             distances.append((candidate_type, distance))
 
     if not distances:
@@ -53,21 +54,6 @@ def _correct_type_distance_rank(undirected_graph, source, correct_type, candidat
         if candidate_type == correct_type:
             return rank
     return -1
-
-
-def _count_paths_to_type(undirected_graph, source, target, cutoff):
-    if source not in undirected_graph or target not in undirected_graph:
-        return 0
-
-    # NetworkX cutoff is expressed in number of edges, same unit as
-    # nx.shortest_path_length.
-    paths = nx.all_simple_paths(
-        undirected_graph,
-        source=source,
-        target=target,
-        cutoff=cutoff,
-    )
-    return sum(1 for _ in paths)
 
 
 def extract_distance_features(gdp, data, gs_path, path_cutoff=4):
@@ -83,8 +69,8 @@ def extract_distance_features(gdp, data, gs_path, path_cutoff=4):
             consistency with the other feature extractors.
         gs_path: Path to the gold-standard Excel file containing ``term`` and
             ``label`` columns.
-        path_cutoff: Maximum number of edges for counting simple paths to the correct
-            type. This protects large graphs from combinatorial path explosion.
+        path_cutoff: Kept for API compatibility. Path counting was removed
+            because enumerating all simple paths is too expensive on large graphs.
 
     Returns:
         pandas.DataFrame: One row per GS term with distance features.
@@ -100,7 +86,7 @@ def extract_distance_features(gdp, data, gs_path, path_cutoff=4):
     _log(f"Graph nodes: {graph.number_of_nodes()}")
     _log(f"Graph edges: {graph.number_of_edges()}")
     _log(f"Candidate type nodes found in graph: {len(candidate_types)}")
-    _log(f"Path counting cutoff: {path_cutoff}")
+    _log("Path counting disabled: nb_paths_to_type was removed for speed")
     _log("Computing distance features")
 
     rows = []
@@ -123,13 +109,6 @@ def extract_distance_features(gdp, data, gs_path, path_cutoff=4):
             correct_type,
             candidate_types,
         )
-        nb_paths_to_type = _count_paths_to_type(
-            undirected_graph,
-            term,
-            correct_type,
-            path_cutoff,
-        )
-
         row = gs_row.to_dict()
         row.update(
             {
@@ -139,7 +118,6 @@ def extract_distance_features(gdp, data, gs_path, path_cutoff=4):
                 "directed_distance": directed_distance,
                 "undirected_distance": undirected_distance,
                 "correct_type_distance_rank": correct_type_distance_rank,
-                "nb_paths_to_type": nb_paths_to_type,
             }
         )
         rows.append(row)
