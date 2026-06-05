@@ -1,5 +1,7 @@
 """Distance-based feature extraction for gold-standard nodes."""
 
+from time import perf_counter
+
 import networkx as nx
 import pandas as pd
 
@@ -35,11 +37,10 @@ def _candidate_type_nodes(gs, graph):
     return [label for label in labels if label in graph]
 
 
-def _correct_type_distance_rank(undirected_graph, source, correct_type, candidate_types):
-    if source not in undirected_graph or correct_type not in undirected_graph:
+def _correct_type_distance_rank(shortest_distances, correct_type, candidate_types):
+    if correct_type not in shortest_distances:
         return -1
 
-    shortest_distances = nx.single_source_shortest_path_length(undirected_graph, source)
     distances = []
     for candidate_type in candidate_types:
         distance = shortest_distances.get(candidate_type)
@@ -56,7 +57,7 @@ def _correct_type_distance_rank(undirected_graph, source, correct_type, candidat
     return -1
 
 
-def extract_distance_features(gdp, data, gs_path, path_cutoff=4):
+def extract_distance_features(gdp, data, gs_path, path_cutoff=4, log_every=50):
     """Extract graph-distance features for gold-standard nodes.
 
     The correct type node is taken from the GS ``label`` column and matched by
@@ -71,6 +72,7 @@ def extract_distance_features(gdp, data, gs_path, path_cutoff=4):
             ``label`` columns.
         path_cutoff: Kept for API compatibility. Path counting was removed
             because enumerating all simple paths is too expensive on large graphs.
+        log_every: Print progress every N GS rows.
 
     Returns:
         pandas.DataFrame: One row per GS term with distance features.
@@ -79,7 +81,11 @@ def extract_distance_features(gdp, data, gs_path, path_cutoff=4):
         raise ValueError("gdp must be prepared before extracting distance features.")
 
     graph = gdp.nxGraph
+    _log("Converting graph to undirected view for undirected distances")
+    start_time = perf_counter()
     undirected_graph = graph.to_undirected()
+    _log(f"Undirected graph ready in {perf_counter() - start_time:.2f}s")
+
     gs = _read_gold_standard(gs_path).copy()
     candidate_types = _candidate_type_nodes(gs, graph)
 
@@ -90,25 +96,49 @@ def extract_distance_features(gdp, data, gs_path, path_cutoff=4):
     _log("Computing distance features")
 
     rows = []
-    for _, gs_row in gs.iterrows():
+    total_rows = len(gs)
+    loop_start = perf_counter()
+    missing_terms = 0
+    missing_types = 0
+    unreachable_directed = 0
+    unreachable_undirected = 0
+
+    for row_index, (_, gs_row) in enumerate(gs.iterrows(), start=1):
+        row_start = perf_counter()
         term = gs_row["term"]
         correct_type = gs_row["label"]
         graph_idx = gdp.nodes_index.get(term)
         found = term in graph
         correct_type_found = correct_type in graph
 
+        if not found:
+            missing_terms += 1
+        if not correct_type_found:
+            missing_types += 1
+
         directed_distance = _shortest_path_length(graph, term, correct_type)
+        if directed_distance == -1:
+            unreachable_directed += 1
+
         undirected_distance = _shortest_path_length(
             undirected_graph,
             term,
             correct_type,
         )
-        correct_type_distance_rank = _correct_type_distance_rank(
-            undirected_graph,
-            term,
-            correct_type,
-            candidate_types,
-        )
+        if undirected_distance == -1:
+            unreachable_undirected += 1
+            correct_type_distance_rank = -1
+        else:
+            shortest_distances = nx.single_source_shortest_path_length(
+                undirected_graph,
+                term,
+            )
+            correct_type_distance_rank = _correct_type_distance_rank(
+                shortest_distances,
+                correct_type,
+                candidate_types,
+            )
+
         row = gs_row.to_dict()
         row.update(
             {
@@ -122,6 +152,25 @@ def extract_distance_features(gdp, data, gs_path, path_cutoff=4):
         )
         rows.append(row)
 
+        if log_every and (row_index == 1 or row_index % log_every == 0 or row_index == total_rows):
+            elapsed = perf_counter() - loop_start
+            avg_time = elapsed / row_index
+            _log(
+                "Progress "
+                f"{row_index}/{total_rows} "
+                f"({row_index / total_rows:.1%}) | "
+                f"last={perf_counter() - row_start:.2f}s | "
+                f"avg={avg_time:.2f}s/row | "
+                f"elapsed={elapsed:.2f}s"
+            )
+
     features = pd.DataFrame(rows)
-    _log("Done")
+    _log(
+        "Summary: "
+        f"missing_terms={missing_terms}, "
+        f"missing_types={missing_types}, "
+        f"unreachable_directed={unreachable_directed}, "
+        f"unreachable_undirected={unreachable_undirected}"
+    )
+    _log(f"Done in {perf_counter() - loop_start:.2f}s")
     return features

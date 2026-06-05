@@ -1,0 +1,61 @@
+{
+  "defaults": {
+    "output_path": "outputs/ml_explainer",
+    "join_on": ["term"],
+    "join_how": "inner",
+    "prediction_pattern": "*_best_test_predictions.csv"
+  },
+  "graphs": [
+    {
+      "name": "biomed_cg",
+      "enabled": true,
+      "features_path": "outputs/explanatory_features/biomed_cg_exp_features.xlsx",
+      "models": [
+        {
+          "name": "RGCN",
+          "enabled": true,
+          "artifacts_dir": "data/biomedical/curated/best_model_data_RGCN/artifacts"
+        },
+        {
+          "name": "RotateEGCN",
+          "enabled": true,
+          "artifacts_dir": "data/biomedical/curated/best_model_data_RotateEGCN/artifacts"
+        }
+      ]
+    },
+    {
+      "name": "biomed_tdg",
+      "enabled": true,
+      "features_path": "outputs/explanatory_features/biomed_tdg_exp_features.xlsx",
+      "models": [
+        {
+          "name": "RGCN",
+          "enabled": true,
+          "artifacts_dir": "data/biomedical/text_derived/best_model_data_RGCN/artifacts"
+        },
+        {
+          "name": "RotateEGCN",
+          "enabled": true,
+          "artifacts_dir": "data/biomedical/text_derived/best_model_data_RotateEGCN/artifacts"
+        }
+      ]
+    },
+    {
+      "name": "dbpedia_174_cg",
+      "enabled": true,
+      "features_path": "outputs/explanatory_features/dbpedia_174_cg_exp_features.xlsx",
+      "models": [
+        {
+          "name": "RGCN",
+          "enabled": true,
+          "artifacts_dir": "data/dbpedia_174/curated/best_model_data_RGCN/artifacts"
+        },
+        {
+          "name": "RotateEGCN",
+          "enabled": true,
+          "artifacts_dir": "data/dbpedia_174/curated/best_model_data_RotateEGCN/artifacts"
+        }
+      ]
+    }
+  ]
+}

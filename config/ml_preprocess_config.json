@@ -1,0 +1,50 @@
+{
+  "defaults": {
+    "output_path": "outputs/ml_explainer/preprocessed",
+    "add_unreachable_flags": false,
+    "drop_columns": [
+      "term",
+      "label",
+      "label_prediction_file",
+      "predictions",
+      "closeness_centrality"
+    ],
+    "distance_columns": [
+      "directed_distance",
+      "undirected_distance",
+      "correct_type_distance_rank"
+    ]
+  },
+  "datasets": [
+    {
+      "name": "biomed_cg_RGCN",
+      "enabled": true,
+      "input_path": "outputs/ml_explainer/biomed_cg__RGCN__correct_prediction_all_seeds.xlsx"
+    },
+    {
+      "name": "biomed_cg_RotateEGCN",
+      "enabled": true,
+      "input_path": "outputs/ml_explainer/biomed_cg__RotateEGCN__correct_prediction_all_seeds.xlsx"
+    },
+    {
+      "name": "biomed_tdg_RGCN",
+      "enabled": true,
+      "input_path": "outputs/ml_explainer/biomed_tdg__RGCN__correct_prediction_all_seeds.xlsx"
+    },
+    {
+      "name": "biomed_tdg_RotateEGCN",
+      "enabled": true,
+      "input_path": "outputs/ml_explainer/biomed_tdg__RotateEGCN__correct_prediction_all_seeds.xlsx"
+    },
+    {
+      "name": "dbpedia_174_cg_RGCN",
+      "enabled": true,
+      "input_path": "outputs/ml_explainer/dbpedia_174_cg__RGCN__correct_prediction_all_seeds.xlsx"
+    },
+    {
+      "name": "dbpedia_174_cg_RotateEGCN",
+      "enabled": true,
+      "input_path": "outputs/ml_explainer/dbpedia_174_cg__RotateEGCN__correct_prediction_all_seeds.xlsx"
+    }
+  ]
+}
