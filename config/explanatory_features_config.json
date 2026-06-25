@@ -1,31 +1,59 @@
 {
-  "defaults": {
-    "features": ["structural", "relational", "distance", "semantic"],
-    "plm": "sentence-transformers/all-MiniLM-L6-v2",
-    "output_path": "outputs/explanatory_features"
-  },
-  "graphs": [
-    {
-      "name": "biomed_curated",
-      "enabled": true,
-      "graph_path": "data/biomedical/curated/biomed_cg.json",
-      "gs_path": "data/biomedical/biomed_gs.xlsx",
-      "relations_to_count": ["isa"]
-    },
-    {
-      "name": "biomed_text_derived",
-      "enabled": true,
-      "graph_path": "data/biomedical/text_derived/biomed_tdg.json",
-      "gs_path": "data/biomedical/biomed_gs.xlsx",
-      "relations_to_count": ["is"]
-    },
-    {
-      "name": "dbpedia_174_curated",
-      "enabled": true,
-      "graph_path": "data/dbpedia_174/curated/dbpedia_174_cg.json",
-      "gs_path": "data/dbpedia_174/GS_dbpedia_174.xlsx",
-      "relations_to_count": ["type"],
-      "note": "Set gs_path and enabled=true when a DBpedia gold-standard file with term and label columns is available."
-    }
-  ]
+    "defaults":  {
+                     "features":  [
+                                      "structural",
+                                      "relational",
+                                      "distance",
+                                      "semantic"
+                                  ],
+                     "plm":  "sentence-transformers/all-MiniLM-L6-v2",
+                     "output_path":  "outputs/explanatory_features"
+                 },
+    "graphs":  [
+                   {
+                       "name":  "biomed_curated",
+                       "enabled":  true,
+                       "graph_path":  "data/biomedical/curated/biomed_cg.json",
+                       "gs_path":  "data/biomedical/biomed_gs.xlsx",
+                       "relations_to_count":  [
+                                                  "is a"
+                                              ]
+                   },
+                   {
+                       "name":  "biomed_tdg_gt2kg",
+                       "enabled":  true,
+                       "graph_path":  "data/biomedical/text_derived/biomed_tdg-gt2kg.json",
+                       "gs_path":  "data/biomedical/biomed_gs.xlsx",
+                       "relations_to_count":  [
+                                                  "is a"
+                                              ]
+                   },
+                   {
+                       "name":  "biomed_tdg_kggen",
+                       "enabled":  false,
+                       "graph_path":  "data/biomedical/text_derived/biomed_tdg_kggen",
+                       "gs_path":  "data/biomedical/biomed_gs.xlsx",
+                       "relations_to_count":  [
+                                                  "is a"
+                                              ]
+                   },
+                   {
+                       "name":  "dbpedia_174_curated",
+                       "enabled":  true,
+                       "graph_path":  "data/dbpedia_174/curated/dbpedia_174_cg.json",
+                       "gs_path":  "data/dbpedia_174/GS_dbpedia_174.xlsx",
+                       "relations_to_count":  [
+                                                  "is a"
+                                              ]
+                   },
+                   {
+                       "name":  "dbpedia_174_tdg",
+                       "enabled":  true,
+                       "graph_path":  "data/dbpedia_174/text_derived/dbpedia_174_kg_tdg.json",
+                       "gs_path":  "data/dbpedia_174/GS_dbpedia_174.xlsx",
+                       "relations_to_count":  [
+                                                  "is a"
+                                              ]
+                   }
+               ]
 }

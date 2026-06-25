@@ -1,0 +1,31 @@
+{
+  "structural": [
+    "in_degree",
+    "out_degree",
+    "total_degree",
+    "pagerank",
+    "betweenness_centrality",
+    "closeness_centrality"
+  ],
+  "relational": [
+    "nb_diverse_relations_in",
+    "nb_diverse_relations_out",
+    "nb_diverse_relations_total",
+    "relational_entropy",
+    "nb_is_a_in",
+    "nb_is_a_out",
+    "nb_is_a_total"
+  ],
+  "distance": [
+    "directed_distance",
+    "undirected_distance",
+    "correct_type_distance_rank"
+  ],
+  "semantic": [
+    "similarity_to_type",
+    "plm_only_classification",
+    "avg_neighbors_similarity",
+    "std_neighbors_similarity",
+    "max_similarity_to_other_types"
+  ]
+}

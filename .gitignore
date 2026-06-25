@@ -179,3 +179,49 @@ cython_debug/
 #  refer to https://docs.cursor.com/context/ignore-files
 .cursorignore
 .cursorindexingignore
+# Project data and generated artifacts
+# Raw/extracted datasets are distributed separately as archives; keep only the
+# placement instructions in Git.
+data/*
+!data/README.md
+!data/.gitkeep
+
+# Generated outputs and cached embeddings can be reproduced or distributed
+# separately, so they should not be committed accidentally. Keep only the
+# precomputed reproducibility inputs described in README.md.
+outputs/*
+!outputs/explanatory_features/
+outputs/explanatory_features/*
+!outputs/explanatory_features/biomed_cg_exp_features.xlsx
+!outputs/explanatory_features/biomed_cg_exp_features_categories.json
+!outputs/explanatory_features/biomed_tdg-gt2kg_exp_features.xlsx
+!outputs/explanatory_features/biomed_tdg-gt2kg_exp_features_categories.json
+!outputs/explanatory_features/dbpedia_174_cg_exp_features.xlsx
+!outputs/explanatory_features/dbpedia_174_cg_exp_features_categories.json
+!outputs/explanatory_features/dbpedia_174_kg_tdg_exp_features.xlsx
+!outputs/explanatory_features/dbpedia_174_kg_tdg_exp_features_categories.json
+!outputs/ml_explainer/
+outputs/ml_explainer/*
+!outputs/ml_explainer/preprocessed/
+outputs/ml_explainer/preprocessed/*
+!outputs/ml_explainer/preprocessed/biomed_cg__RGCN__correct_prediction_all_seeds_cleaned_ml.xlsx
+!outputs/ml_explainer/preprocessed/biomed_cg__RotateEGCN__correct_prediction_all_seeds_cleaned_ml.xlsx
+!outputs/ml_explainer/preprocessed/biomed_tdg_gt2kg__RGCN__correct_prediction_all_seeds_cleaned_ml.xlsx
+!outputs/ml_explainer/preprocessed/biomed_tdg_gt2kg__RotateEGCN__correct_prediction_all_seeds_cleaned_ml.xlsx
+!outputs/ml_explainer/preprocessed/dbpedia_174_cg__RGCN__correct_prediction_all_seeds_cleaned_ml.xlsx
+!outputs/ml_explainer/preprocessed/dbpedia_174_cg__RotateEGCN__correct_prediction_all_seeds_cleaned_ml.xlsx
+!outputs/ml_explainer/preprocessed/dbpedia_174_tdg__RGCN__correct_prediction_all_seeds_cleaned_ml.xlsx
+!outputs/ml_explainer/preprocessed/dbpedia_174_tdg__RotateEGCN__correct_prediction_all_seeds_cleaned_ml.xlsx
+embeddings_init/
+
+# Local editor state
+.vscode/
+
+# Historical local experiment scripts
+# The cleaned reproducibility entrypoints live in scripts/.
+last_results_scripts/
+new_results_scripts/
+side_scripts/
+AD_val_scripts/
+tdg-bench/
+

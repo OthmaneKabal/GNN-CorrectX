@@ -1,0 +1,15 @@
+{
+  "defaults": {
+    "representative_seeds_path": "outputs/gnn_representative_seeds/representative_gnn_seeds.xlsx",
+    "datasets_config_path": "config/ml_models_config.json",
+    "output_path": "outputs/ml_explainer/representative_ml_models",
+    "ml_seeds": [42, 123, 456, 789, 2024],
+    "models": ["svm", "xgboost", "random_forest"],
+    "tune": true,
+    "n_iter": 50,
+    "cv": 5,
+    "n_jobs": 1,
+    "scoring": "f1_macro",
+    "selection_metric": "f1_macro"
+  }
+}

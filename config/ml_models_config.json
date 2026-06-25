@@ -1,0 +1,96 @@
+﻿{
+    "defaults":  {
+                     "output_path":  "outputs/ml_explainer/ml_models",
+                     "seed_ml":  42,
+                     "gnn_seeds":  [
+
+                                   ],
+                     "models":  [
+                                    "random_forest",
+                                    "xgboost",
+                                    "logistic_regression",
+                                    "extra_trees",
+                                    "svm_linear",
+                                    "svm_rbf",
+                                    "hist_gradient_boosting",
+                                    "mlp"
+                                ],
+                     "tune":  true,
+                     "n_iter":  40,
+                     "cv":  3,
+                     "scoring":  "f1_macro",
+                     "selection_metric":  "f1_macro"
+                 },
+    "datasets":  [
+                     {
+                         "name":  "biomed_cg_RGCN",
+                         "graph_name":  "biomed_cg",
+                         "gnn_model":  "RGCN",
+                         "enabled":  true,
+                         "excel_path":  "outputs/ml_explainer/preprocessed/biomed_cg__RGCN__correct_prediction_all_seeds_cleaned_ml.xlsx"
+                     },
+                     {
+                         "name":  "biomed_cg_RotateEGCN",
+                         "graph_name":  "biomed_cg",
+                         "gnn_model":  "RotateEGCN",
+                         "enabled":  true,
+                         "excel_path":  "outputs/ml_explainer/preprocessed/biomed_cg__RotateEGCN__correct_prediction_all_seeds_cleaned_ml.xlsx"
+                     },
+                     {
+                         "name":  "biomed_tdg_gt2kg_RGCN",
+                         "graph_name":  "biomed_tdg_gt2kg",
+                         "gnn_model":  "RGCN",
+                         "enabled":  true,
+                         "excel_path":  "outputs/ml_explainer/preprocessed/biomed_tdg_gt2kg__RGCN__correct_prediction_all_seeds_cleaned_ml.xlsx"
+                     },
+                     {
+                         "name":  "biomed_tdg_gt2kg_RotateEGCN",
+                         "graph_name":  "biomed_tdg_gt2kg",
+                         "gnn_model":  "RotateEGCN",
+                         "enabled":  true,
+                         "excel_path":  "outputs/ml_explainer/preprocessed/biomed_tdg_gt2kg__RotateEGCN__correct_prediction_all_seeds_cleaned_ml.xlsx"
+                     },
+                     {
+                         "name":  "biomed_tdg_kggen_RGCN",
+                         "graph_name":  "biomed_tdg_kggen",
+                         "gnn_model":  "RGCN",
+                         "enabled":  false,
+                         "excel_path":  "outputs/ml_explainer/preprocessed/biomed_tdg_kggen__RGCN__correct_prediction_all_seeds_cleaned_ml.xlsx"
+                     },
+                     {
+                         "name":  "biomed_tdg_kggen_RotateEGCN",
+                         "graph_name":  "biomed_tdg_kggen",
+                         "gnn_model":  "RotateEGCN",
+                         "enabled":  false,
+                         "excel_path":  "outputs/ml_explainer/preprocessed/biomed_tdg_kggen__RotateEGCN__correct_prediction_all_seeds_cleaned_ml.xlsx"
+                     },
+                     {
+                         "name":  "dbpedia_174_cg_RGCN",
+                         "graph_name":  "dbpedia_174_cg",
+                         "gnn_model":  "RGCN",
+                         "enabled":  true,
+                         "excel_path":  "outputs/ml_explainer/preprocessed/dbpedia_174_cg__RGCN__correct_prediction_all_seeds_cleaned_ml.xlsx"
+                     },
+                     {
+                         "name":  "dbpedia_174_cg_RotateEGCN",
+                         "graph_name":  "dbpedia_174_cg",
+                         "gnn_model":  "RotateEGCN",
+                         "enabled":  true,
+                         "excel_path":  "outputs/ml_explainer/preprocessed/dbpedia_174_cg__RotateEGCN__correct_prediction_all_seeds_cleaned_ml.xlsx"
+                     },
+                     {
+                         "name":  "dbpedia_174_tdg_RGCN",
+                         "graph_name":  "dbpedia_174_tdg",
+                         "gnn_model":  "RGCN",
+                         "enabled":  true,
+                         "excel_path":  "outputs/ml_explainer/preprocessed/dbpedia_174_tdg__RGCN__correct_prediction_all_seeds_cleaned_ml.xlsx"
+                     },
+                     {
+                         "name":  "dbpedia_174_tdg_RotateEGCN",
+                         "graph_name":  "dbpedia_174_tdg",
+                         "gnn_model":  "RotateEGCN",
+                         "enabled":  true,
+                         "excel_path":  "outputs/ml_explainer/preprocessed/dbpedia_174_tdg__RotateEGCN__correct_prediction_all_seeds_cleaned_ml.xlsx"
+                     }
+                 ]
+}
