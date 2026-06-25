@@ -2,7 +2,7 @@
 
 This repository contains the code and resources associated with **GNN-CorrectX**, the meta-explainability framework used to analyse when GNN predictions are correct or incorrect.
 
-![GNN-CorrectX overview](gnn-correctX.pdf)
+![GNN-CorrectX overview](GNN-CorrectX.jpg)
 
 ## 1. Requirements
 
