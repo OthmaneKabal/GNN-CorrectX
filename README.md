@@ -11,6 +11,8 @@ Create a Python environment and install the required packages:
 ```bash
 pip install -r requirements_server_ml.txt
 ```
+> **Note.** Package-level `pip install` support will be made available after paper acceptance to preserve anonymity during the review process.
+
 > **Note.** Download or copy the data archive from: "", then extract it directly into this directory:
 >
 > ```text
